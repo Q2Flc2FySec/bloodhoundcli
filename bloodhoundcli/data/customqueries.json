@@ -1188,6 +1188,26 @@
       ]
     },
     {
+      "name": "Mark members of protected users group",
+      "category": "Post Processing",
+      "queryList": [
+        {
+          "final": true,
+          "query": "MATCH p = (u:User {enabled: true})-[:MemberOf*1..5]->(g:Group) WHERE g.objectid ENDS WITH '-525' SET u.sensitive=true RETURN p"
+        }
+      ]
+    },
+    {
+      "name": "Get high value users that are not in protected users group",
+      "category": "Post Processing",
+      "queryList": [
+        {
+          "final": true,
+          "query": "MATCH (u:User {enabled: true, highvalue: true}) where coalesce(u.sensitive, false)=false return u"
+        }
+      ]
+    },
+    {
       "name": "Tag T2 OUs",
       "category": "AD Tiering",
       "queryList": [
